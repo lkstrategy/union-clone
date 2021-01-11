@@ -16,7 +16,7 @@ jobs:
         HOST: ${{ secrets.DIGITAL_OCEAN_IP_ADDRESS }}
         USERNAME: ${{ secrets.USERNAME }}
         PORT: ${{ secrets.PORT }}
-        KEY: ${{ secrets.SSHKEY }}
+        KEY: ${{ secrets.PRIVATE_KEY }}
       with:
         source: "."
         target: "/app"
