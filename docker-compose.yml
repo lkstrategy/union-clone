@@ -11,7 +11,7 @@ services:
       - ./app/:/usr/src/app/
     ports:
       - 8000:8000
-        environment: 
+    environment: 
       - DB_HOST=db
       - DB_NAME=app
       - DB_USER=postgres
@@ -25,6 +25,3 @@ services:
     - POSTGRES_DB=app
     - POSTGRES_USER=postgres
     - POSTGRES_PASSWORD=supersecretpassword
-
-volumes:
-  postgres_data:
