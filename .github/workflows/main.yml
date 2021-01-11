@@ -33,8 +33,6 @@ jobs:
     needs: build
     if: github.ref == 'refs/heads/master'
     steps:
-      - name: Checkout master
-        uses: actions/checkout@v1
       - name: Add environment variables to .env
         run: |
           echo DEBUG=0 >> .env
