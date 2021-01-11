@@ -1,2 +1,8 @@
 django==3.0.4
 gunicorn==20.0.4
+flake8>=3.6.0,<3.7.0
+requests
+humanize
+timestring
+python-dateutil
+djangorestframework>=3.9.0,<3.10.0
