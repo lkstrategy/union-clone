@@ -25,7 +25,7 @@ SECRET_KEY = 'xp0fbyteh&1bt=(&20sosfibk+g5hb=@q-ewlg%!eqg23@p5z#'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['localhost', '127.0.0.1', '206.189.75.149', '*']
+ALLOWED_HOSTS = ['localhost', '127.0.0.1', '206.189.75.149', '*' 'leads.rapidconnect.co']
 
 
 # Application definition
