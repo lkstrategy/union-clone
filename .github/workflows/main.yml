@@ -32,9 +32,6 @@ jobs:
 
     needs: build
     if: github.ref == 'refs/heads/master'
-      - name: Add environment variables to .env
-        run: |
-          echo DEBUG=0 >> .env
       - name: Add the private SSH key to the ssh-agent
         env:
           SSH_AUTH_SOCK: /tmp/ssh_agent.sock
