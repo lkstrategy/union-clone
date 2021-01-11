@@ -1,0 +1,8 @@
+Django>=2.2.9,<2.3.0
+djangorestframework>=3.9.0,<3.10.0
+psycopg2
+flake8>=3.6.0,<3.7.0
+requests
+humanize
+timestring
+python-dateutil
