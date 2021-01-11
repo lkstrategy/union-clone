@@ -1,0 +1,52 @@
+{% load static%}
+
+<div> 
+  <!--Add content below-->  
+
+  <div class="row">
+    
+        {% if user.is_authenticated %}
+        {% if leadCompletes %}
+        {% for leadComplete in leadCompletes %}
+        <div class="col-sm-6 col-lg-4 mb-4">
+            <div class="card bg-light">
+              <div class="card-body">
+                <div class="card-title">{{ leadComplete.firstname }} {{leadComplete.lastname}}</div>
+                <p class="card-text">{{leadComplete.title }} at {{leadComplete.company.name}}</p>
+                
+            </div>
+            <div class="card-body"><a class="card-link" href="{% url 'leadCompleteView' leadComplete.id %}">View Lead</a>
+                <a class="card-link" href="#!">Archive Lead</a></div>
+            </div>
+          </div>
+   
+    
+      {% endfor %}
+      {% else %}
+          <div class="col-md-12"></div>
+              <p> No Leads Yet... </p>
+          </div>
+      {% endif %}
+      {%else%}
+          Nothing
+  {%endif%}
+    </div>
+ 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!--Add content above-->  
+</div>

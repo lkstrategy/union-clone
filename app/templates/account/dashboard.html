@@ -1,0 +1,175 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="media mb-4 mt-3"><span class="fa-stack mr-2 ml-n1"><i class="fas fa-circle fa-stack-2x text-300"></i><i class="fa-inverse fa-stack-1x text-primary fas fa-percentage"></i></span>
+    <div class="media-body">
+      <h5 class="mb-0 text-primary position-relative"><span class="bg-200 pr-3">By the numbers</span><span class="border position-absolute absolute-vertical-center w-100 z-index--1 l-0"></span></h5>
+      <p class="mb-0">Review your stats, review your leads, and start hunting!</p>
+    </div>
+  </div>
+  <!--Begin showed content-->
+  <div class="card-deck">
+    <div class="card mb-3 overflow-hidden" style="min-width: 12rem">
+      <div class="bg-holder bg-card" style="background-image:url(assets/img/illustrations/corner-1.png);">
+      </div>
+      <!--/.bg-holder-->
+
+      <div class="card-body position-relative">
+        <h6>Hot Leads This Month <span class="badge badge-soft-warning rounded-capsule ml-2"></span></h6>
+        <div class="display-4 fs-4 mb-2 font-weight-normal text-sans-serif text-warning">53</div><a class="font-weight-semi-bold fs--1 text-nowrap" href="#!">See all<span class="fas fa-angle-right ml-1" data-fa-transform="down-1"></span></a>
+      </div>
+    </div>
+    <div class="card mb-3 overflow-hidden" style="min-width: 12rem">
+      <div class="bg-holder bg-card" style="background-image:url(assets/img/illustrations/corner-2.png);">
+      </div>
+      <!--/.bg-holder-->
+
+      <div class="card-body position-relative">
+        <h6>Hot Leads Accepted<span class="badge badge-soft-info rounded-capsule ml-2"></span></h6>
+        <div class="display-4 fs-4 mb-2 font-weight-normal text-sans-serif text-info">11</div><a class="font-weight-semi-bold fs--1 text-nowrap" href="#!">All all<span class="fas fa-angle-right ml-1" data-fa-transform="down-1"></span></a>
+      </div>
+    </div>
+    <div class="card mb-3 overflow-hidden" style="min-width: 12rem">
+      <div class="bg-holder bg-card" style="background-image:url(assets/img/illustrations/corner-3.png);">
+      </div>
+      <!--/.bg-holder-->
+
+      <div class="card-body position-relative">
+        <h6>Logins This Month<span class="badge badge-soft-success rounded-capsule ml-2"></span></h6>
+        <div class="display-4 fs-4 mb-2 font-weight-normal text-sans-serif" data-countup='{"count":7,"format":"comma","prefix":""}'>0</div><a class="font-weight-semi-bold fs--1 text-nowrap" href="#!">Statistics<span class="fas fa-angle-right ml-1" data-fa-transform="down-1"></span></a>
+      </div>
+      </div>
+      <!--End showed content-->
+    </div>
+
+  
+  <!--End on click content -->
+  
+
+ 
+
+<!--Section divider -->
+  <div class="media mb-4 mt-6"><span class="fa-stack mr-2 ml-n1"><i class="fas fa-circle fa-stack-2x text-300"></i><i class="fa-inverse fa-stack-1x text-primary fas fa-list" data-fa-transform="shrink-2"></i></span>
+    <div class="media-body">
+      <h5 class="mb-0 text-primary position-relative"><span class="bg-200 pr-3">Hot Leads</span><span class="border position-absolute absolute-vertical-center w-100 z-index--1 l-0"></span></h5>
+      <p class="mb-0">Qualified leads and engagement from Union Resolute's outreach.</p>
+    </div>
+  </div>
+  <!-- Start of the main body wrapper -->
+  <div class="row no-gutters">
+    <div class="col-lg-12 pr-lg-2 mb-3">
+    <!-- Start of New Hot Leads View -->
+    {% include 'partials/_dailytasksview.html' %}
+     
+
+        <!-- This is the end of the accorion-->
+      </div>
+    </div>
+
+      
+
+
+      <div class="media mb-4 mt-6"><span class="fa-stack mr-2 ml-n1"><i class="fas fa-circle fa-stack-2x text-300"></i><i class="fa-inverse fa-stack-1x text-primary fas fa-list" data-fa-transform="shrink-2"></i></span>
+        <div class="media-body">
+          <h5 class="mb-0 text-primary position-relative"><span class="bg-200 pr-3">Leads You Are Watching</span><span class="border position-absolute absolute-vertical-center w-100 z-index--1 l-0"></span></h5>
+          <p class="mb-0">Curated leads and engagement from Union Resolute's outreach.</p>
+        </div>
+      </div>
+      <!-- Start of the main body wrapper -->
+      <div class="row no-gutters">
+        <div class="col-lg-12 pr-lg-2 mb-3">
+        <!-- Start of New Hot Leads View -->
+        {% include 'partials/_favoritedleads.html' %}
+        </div>
+      </div>
+            
+
+
+      <div class="media mb-4 mt-6"><span class="fa-stack mr-2 ml-n1"><i class="fas fa-circle fa-stack-2x text-300"></i><i class="fa-inverse fa-stack-1x text-primary fas fa-list" data-fa-transform="shrink-2"></i></span>
+        <div class="media-body">
+          <h5 class="mb-0 text-primary position-relative"><span class="bg-200 pr-3">Leads Lists</span><span class="border position-absolute absolute-vertical-center w-100 z-index--1 l-0"></span></h5>
+          <p class="mb-0">Your accepted and archived leads.</p>
+        </div>
+      </div>
+      <!-- Start of the main body wrapper -->
+      <div class="row no-gutters">
+        <div class="col-lg-12 pr-lg-2 mb-3">
+        <!-- Start of New Hot Leads View -->
+        {% include 'partials/_leadslists.html' %}
+         
+            <!-- This is the end of the accorion-->
+          </div>
+        </div>
+      </div>
+      
+
+      
+  
+{% endblock %} 
+{% block js %}
+
+<script>
+
+  $('#makeFavorite').click(function(){
+    alert('yo')
+    fid = $(this).data("leadcompleteid");
+    console.log('fid -> ' + fid)
+    $.ajax({
+      type: 'GET',
+      url: `{% url 'ajax_update_lead_status' %}`,
+      data: {
+        leadComplete_id: fid,
+      },
+      success: function(response) {
+        alert('Success from Ajax');
+        /*$('#table ').load(location.href + ' #table>*', '');*/
+      },
+      error: function(response) {
+        alert('Error from Ajax');
+      }
+    })
+    /**
+    var eid;
+    eid = $(this).attr("data-engagmentid");
+    $.get('ajax/ajax_change_status', {enagement_id: eid}, function(data){
+      $('#refesh_engage').hide();
+      alert("did stuff");
+    })
+    */
+  });
+
+</script>
+
+<script>
+
+  $('#makeArchive').click(function(){
+    alert('yo')
+    fid = $(this).data("leadcompleteid");
+    console.log('fid -> ' + fid)
+    $.ajax({
+      type: 'GET',
+      url: `{% url 'ajax_update_lead_archived' %}`,
+      data: {
+        leadComplete_id: fid,
+      },
+      success: function(response) {
+        alert('Success from Ajax');
+        /*$('#table ').load(location.href + ' #table>*', '');*/
+      },
+      error: function(response) {
+        alert('Error from Ajax');
+      }
+    })
+    /**
+    var eid;
+    eid = $(this).attr("data-engagmentid");
+    $.get('ajax/ajax_change_status', {enagement_id: eid}, function(data){
+      $('#refesh_engage').hide();
+      alert("did stuff");
+    })
+    */
+  });
+
+</script>
+
+{% endblock %}

@@ -1,0 +1,72 @@
+{% load static %}
+
+<div class="collapse show" id="profile-intro">
+    {%if leadMessages %}
+    {% for leadMessage in leadMessages %}
+  <p>
+    <div class="card-header bg-light">
+      <div>
+        <div style="float: right;">
+      <span class='far fa-envelope' style="font-size: 5em;"></span>
+      </div>
+      <h4 class="mb-0">{{ leadMessage.subject }} </h4><br>
+      <p>{{ leadMessage.updatedAt}}</p>
+      <button class="btn btn-falcon-default ml-2" type="button" data-toggle="collapse" data-target="#collapseExample{{ leadMessage.id }}" aria-expanded="false" aria-controls="collapseExample">View Message </button>
+  </p>
+</div>
+  </div>
+  <div class="collapse" id="collapseExample{{ leadMessage.id }}">
+    <div class="clearfix">
+    <textarea class="form-control border rounded" rows="10" readonly>{{ leadMessage.description }}  </textarea><br>
+    <div> <button class="btn btn-success mr-1 mb-1 float-right" type="button"><a class="mailtoui" href="mailto:{{ companyLead.email }}?subject={{leadMessage.subjectEncoded}}&body={{leadMessage.descriptionEncoded|slice:':1800'}}....">Reply In-Line</a></button></div>
+  </div>
+</div>
+  {% endfor %}
+    {% else %}
+      <div class="col-md-12"></div>
+        <p> No Messages Yet... </p>
+      
+    
+     {% endif %} 
+     
+    <!--Add below the fold stuff here -->
+  </div>
+  <br>
+<div class="row">
+  <div class = "col-md-12">
+{% if leadMessages.has_other_pages %}
+    <nav aria-label="Page navigation example">
+      <ul class="pagination">
+        {% if leadMessages.has_previous %}
+        <li class="page-item">
+          <a href="?page={{ leadMessages.previous_page_number}}" class="page-link">&laquo;</a>
+        </li>
+        {% else %}
+        <li class="page item disabled"></li>
+        <a class="page-link">&laquo;</a>
+        {% endif %}
+        {% for i in leadMessages.paginator.page_range %}
+          {% if leadMessages.number == i%}
+          <li class="page-item active"> 
+            <a class="page-link">{{i}}</a>
+          </li>
+          {% else %}
+          <li class="page-item"></li>
+          <a href="?page={{i}}" class="page-link">{{i}}</a>
+          {% endif %}
+
+        {% endfor %}
+        {% if leadMessages.has_next %}
+        <li class="page-item">
+          <a href="?page={{ leadMessages.next_page_number}}" class="page-link">&raquo;</a>
+        </li>
+        {% else %}
+        <li class="page item disabled"></li>
+        <a class="page-link">&raquo;</a>
+        {% endif %}
+      </ul>
+      
+    </nav>
+{% endif %}
+</div>
+</div>

@@ -1,0 +1,323 @@
+{% extends 'base.html' %}
+{% load static %}
+<!--{{leadShow.firstname}} <br> LeadScore: {{ leadScore.score }}
+            <br> Lead Engagmenet {{ leadEngagement.engagementName }} <br>
+            Company Lead: {{leadShow.company.name }}-->>
+
+
+{% block content %}
+{%if user.is_authenticated%}
+<div class="card mb-3">
+  <div class="card-header position-relative min-vh-10 mb-7" style="padding-top: 100px;">
+    
+    <!--/.bg-holder-->
+    <div class="avatar avatar-5xl avatar-profile"><img class="rounded-circle img-thumbnail shadow-sm" src="//logo.clearbit.com/{{ leadShow.company.url }}?size=100" width="300" alt="" /></div>
+    </div>
+    <div class="card-body">
+      <div class="row">
+        <div class="col-lg-8">
+          
+       
+  
+                
+                <h4 class="mb-1"> {{ leadShow.firstname }}  {{leadShow.lastname }}<small class="fas fa-check-circle text-primary ml-1" data-toggle="tooltip" data-placement="right" title="Verified" data-fa-transform="shrink-4 down-2"></small>
+                </h4>
+                <h5 class="fs-0 font-weight-normal">{{ leadShow.title }} at {{ leadShow.company.name }}</h5>
+                <p class="text-500">New York, USA</p>
+      
+                <button id="make_favorite" data-engagementid="{{ leadShow.id }}" class="btn btn-falcon-primary btn-sm px-3" type="button">Favorite</button>
+                <button class="btn btn-falcon-default btn-sm px-3 ml-2" type="button">Accept Lead</button>
+                <hr class="border-dashed my-4 d-lg-none" />
+              </div>
+              </div>
+   
+    
+
+    
+      
+      <!--/.bg-holder-->
+     
+      
+   
+    
+    </div>
+    </div>
+
+
+  
+  <div class="card-deck">
+    <div class="card mb-3 overflow-hidden" style="min-width: 12rem">
+      <div class="bg-holder bg-card" style="background-image:url(assets/img/illustrations/corner-1.png);">
+      </div>
+      <!--/.bg-holder-->
+
+      <div class="card-body position-relative">
+        <h6>Company Revenue<span class="badge badge-soft-warning rounded-capsule ml-2"></span></h6>
+        <div class="display-4 fs-4 mb-2 font-weight-normal text-sans-serif text-warning">{{ leadShow.company.revenueBand}}</div>
+      </div>
+    </div>
+    <div class="card mb-3 overflow-hidden" style="min-width: 12rem">
+      <div class="bg-holder bg-card" style="background-image:url(assets/img/illustrations/corner-2.png);">
+      </div>
+      <!--/.bg-holder-->
+
+      <div class="card-body position-relative">
+        <h6>Total Touches<span class="badge badge-soft-info rounded-capsule ml-2"></span></h6>
+        <div class="display-4 fs-4 mb-2 font-weight-normal text-sans-serif text-info">{{ leadEngagement.touches }}</div>
+      </div>
+    </div>
+    <div class="card mb-3 overflow-hidden" style="min-width: 12rem">
+      <div class="bg-holder bg-card" style="background-image:url(assets/img/illustrations/corner-3.png);">
+      </div>
+      <!--/.bg-holder-->
+
+      <div class="card-body position-relative">
+        <h6>Alexa Rank<span class="badge badge-soft-success rounded-capsule ml-2"></span></h6>
+        <div class="display-4 fs-4 mb-2 font-weight-normal text-sans-serif" data-countup='{"count":{{leadShow.company.alexaRank}},"format":"comma","prefix":""}'>0</div>
+      </div>
+    </div>
+  </div>
+  <div class="row no-gutters">
+    
+    <div class="col-lg-8 pr-lg-2">
+      <div class="card mb-3">
+        <div class="card-header bg-light">
+          <h5 class="mb-0">Messages</h5>
+        </div>
+        <div class="card-body text-justify">
+          <!--Add above the fold stuff here-->
+          {% include 'partials/_messages.html' %}
+          
+        </div>
+        </div>
+      <div>
+        
+        {% include 'partials/_news.html' %}
+       
+      </div>
+      
+
+
+
+
+      <!-- Just a bunch of random shit -->
+     
+    </div>
+    <div class="col-lg-4 pl-lg-2">
+      <div class="sticky-top sticky-sidebar">
+        <div class="card mb-3">
+          <div class="card-header bg-light">
+            <h5 class="mb-0">Engagement</h5>
+          </div>
+          <table id="table" class="table">
+
+  <tbody>
+    <tr>
+      <th scope="row">Total Touches</th>
+      <td> {{ leadEngagement.touches }} </td>
+
+    </tr>
+    <tr>
+      <th scope="row">Emails Opened</th>
+      <td> {{ leadEngagement.opens }}</td>
+      
+    </tr>
+    <tr>
+      <th scope="row">Emails Clicked</th>
+      <td> {{ leadEngagement.click }}</td>
+    
+    </tr>
+    <tr>
+      <th scope="row">Website Visits</th>
+      <td> {{ leadEngagement.visits }}</td>
+    
+    </tr>
+    <tr>
+      <th scope="row">Website Page Views</th>
+      <td>{{ leadEngagement.pageviews }}</td>
+    
+    </tr>
+    <tr>
+    
+        <td>
+          <form method="POST" id="post-form"></form>
+          <button id="refresh_engage" data-engagementid="{{ leadEngagement.id }}" class="btn btn-secondary btn-sm mr-1">Update Data</button>
+          </form>
+      </td>
+      </tr>
+  </tbody>
+</table>
+        </div>
+        <div class="card mb-3">
+          <div class="card-header bg-light">
+            <h5 class="mb-0">Company Details</h5>
+            
+          </div>
+          <div class="card-body fs--1">
+            <p><i> These numbers are based on the best data we have available.</i></p>
+            <table class="table">
+              <tbody>
+                <tr>
+                  <th scope="row">Approximate Age</th>
+                  <td>{{ leadShow.company.estimatedAge }} years</td>
+                </tr>
+                <tr>
+                  <th scope="row">Company Revenue</th>
+                  <td>{{ leadShow.company.revenueBand }}</td>
+                </tr>
+                <tr>
+                  <th scope="row">Employee Count</th>
+                  <td>{{ leadShow.company.employeeBand }}</td>
+                </tr>
+                <tr>
+                  <th scope="row">Alexa Rank</th>
+                  <td>{{ leadShow.company.alexaRank }}</td>
+                </tr>
+                <tr>
+                  <th scope="row">Company LinkedIn</th>
+                  <td><a href="{{ leadShow.company.companyLinkedin }}"> Click here to view </a> </a></a></td>
+                </tr>
+                <tr>
+                  <th scope="row">City</th>
+                  <td>{{ leadShow.company.city }}</td>
+                </tr>
+                <tr>
+                  <th scope="row">State</th>
+                  <td>{{ leadShow.company.state }}</td>
+                </tr>
+                <tr>
+                  <th scope="row">Industry</th>
+                  <td>{{ leadShow.company.companyIndustry }}</td>
+                </tr>
+                <tr>
+                  <th scope="row">Facebook</th>
+                  <td>{{ leadShow.company.companyLinkedin }}</td>
+                </tr>
+
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <div class="card mb-3">
+          <div class="card-header bg-light">
+            <h5 class="mb-0">Similar Companies</h5>
+          </div>
+          <div style="float: left; clear:none">
+          <div class="avatar avatar-4xl">
+            <a href=""><img class="rounded-circle" src="//logo.clearbit.com/{{ leadShow.company.similarCompanyOne}}?size=100" alt="" /></a>
+          </div>
+          <div class="avatar avatar-4xl">
+            <img class="rounded-circle" src="//logo.clearbit.com/{{ leadShow.company.similarCompanyTwo }}?size=100" alt="" />
+          </div>
+          <div class="avatar avatar-4xl">
+            <img class="rounded-circle" src="//logo.clearbit.com/{{ leadShow.company.similarCompanyThree }}?size=100" alt="" />
+          </div>
+          </div>
+        </div>
+        
+  
+        
+  
+
+  {%else%}
+  <h1>Please login before viewing your leads... </h1>
+  {%endif%}
+  </div>
+{% endblock %}
+
+
+{% block js %}
+<script>
+    $('#refresh_engage').click(function(){
+      
+      eid = $(this).data("engagementid");
+      console.log('eid -> ' + eid)
+      $.ajax({
+        type: 'GET',
+        url: `{% url 'ajax_change_status' %}`,
+        data: {
+          engagement_id: eid,
+        },
+        success: function(response) {
+          /*alert('Success from Ajax');*/
+          $('#table ').load(location.href + ' #table>*', '');
+        },
+        error: function(response) {
+          alert('Error from Ajax');
+        }
+      })
+      /**
+      var eid;
+      eid = $(this).attr("data-engagmentid");
+      $.get('ajax/ajax_change_status', {enagement_id: eid}, function(data){
+        $('#refesh_engage').hide();
+        alert("did stuff");
+      })
+      */
+    });
+  
+</script>
+<script>
+  $('#refresh_news').click(function(){
+    alert('yo')
+    lid = $(this).data("leadshow");
+    console.log('lid -> ' + lid)
+    $.ajax({
+      type: 'GET',
+      url: `{% url 'ajax_get_news' %}`,
+      data: {
+        leadCompany_id: lid,
+      },
+      success: function(response) {
+        /*alert('Success from Ajax');*/
+        $('#table ').load(location.href + ' #table>*', '');
+      },
+      error: function(response) {
+        alert('Error from Ajax');
+      }
+    })
+    /**
+    var eid;
+    eid = $(this).attr("data-engagmentid");
+    $.get('ajax/ajax_change_status', {enagement_id: eid}, function(data){
+      $('#refesh_engage').hide();
+      alert("did stuff");
+    })
+    */
+  });
+
+</script>
+<script>
+
+  $('#make_favorite').click(function(){
+    alert('yo')
+    fid = $(this).data("leadshow");
+    console.log('fid -> ' + fid)
+    $.ajax({
+      type: 'GET',
+      url: `{% url 'ajax_get_news' %}`,
+      data: {
+        leadCompany_id: lid,
+      },
+      success: function(response) {
+        /*alert('Success from Ajax');*/
+        $('#table ').load(location.href + ' #table>*', '');
+      },
+      error: function(response) {
+        alert('Error from Ajax');
+      }
+    })
+    /**
+    var eid;
+    eid = $(this).attr("data-engagmentid");
+    $.get('ajax/ajax_change_status', {enagement_id: eid}, function(data){
+      $('#refesh_engage').hide();
+      alert("did stuff");
+    })
+    */
+  });
+
+</script>
+<script src="https://cdn.jsdelivr.net/npm/mailtoui@1.0.3/dist/mailtoui-min.js"></script>
+{% endblock %}
+
