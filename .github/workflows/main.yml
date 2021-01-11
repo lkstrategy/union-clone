@@ -76,7 +76,7 @@ jobs:
         run: |
           scp -o StrictHostKeyChecking=no -r ./.env root@${{ secrets.DIGITAL_OCEAN_IP_ADDRESS }}:/root/union-main/
           ssh -o StrictHostKeyChecking=no root@${{ secrets.DIGITAL_OCEAN_IP_ADDRESS }} << 'ENDSSH'
-            cd /app
+            cd /root/union-main/
             source .env
             docker login docker.pkg.github.com -u lkstrategy -p ${{ secrets.GITHUBKEY }}
             docker pull $WEB_IMAGE
