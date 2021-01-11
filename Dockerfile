@@ -18,7 +18,10 @@ RUN apk update \
 # install dependencies
 RUN pip install --upgrade pip
 COPY ./requirements.txt /usr/src/app/requirements.txt
+RUN apk add --update --no-cache postgresql-client
+RUN apk add --update --no-cache --virtual .tmp-build-deps \
+        gcc libc-dev linux-headers postgresql-dev
 RUN pip install -r /usr/src/app/requirements.txt
-
+RUN apk del .tmp-build-deps
 # copy project
 COPY . /usr/src/app/
